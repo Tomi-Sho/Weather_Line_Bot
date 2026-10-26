@@ -13,39 +13,59 @@ USER_ID = os.getenv("USER_ID")
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 
-# 気象庁から天気情報を取得
-url = "https://www.jma.go.jp/bosai/forecast/data/forecast/110000.json" # 熊谷地方気象台
+# 気象庁から天気情報を取得 (埼玉県：熊谷地方気象台)
+url = "https://www.jma.go.jp/bosai/forecast/data/forecast/110000.json"
+# 気温データ用のURL
+temp_url = "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/110000.json"
 
 try:
     response = requests.get(url)
     response.raise_for_status()
-    weather_data =response.json()
+    weather_data = response.json()
 
     # 地域名と天気情報を抜き出す
     area_name = weather_data[0]["timeSeries"][0]["areas"][1]["area"]["name"] # 南部
     today_weather = weather_data[0]["timeSeries"][0]["areas"][1]["weathers"][0] # 南部
 
-    # 天気に記号をつける
+    # 天気に絵文字をつける
     if "雷" in today_weather:
-        today_weather += "⛈"
+        today_weather_icon = today_weather + " ⛈"
     elif "雪" in today_weather:
-        today_weather += "⛄"
+        today_weather_icon = today_weather + " ⛄"
     elif "雨" in today_weather:
-        today_weather += "⛈"
+        today_weather_icon = today_weather + " ☔"
     elif "くもり" in today_weather and "晴れ" in today_weather:
-        today_weather += "🌤のち曇り"
+        today_weather_icon = today_weather + " 🌤"
     elif "くもり" in today_weather:
-        today_weather += "☁"
+        today_weather_icon = today_weather + " ☁"
     elif "晴れ" in today_weather:
-        today_weather += "☀"
+        today_weather_icon = today_weather + " ☀"
+    else:
+        today_weather_icon = today_weather
 
-    # LINEに送信するメッセージの作成
-    message_text = f"{now_time.month}月{now_time.day}日の埼玉県 {area_name}の天気は「{today_weather}"
-    if "所により" in message_text:
-        message_text = message_text.replace("所により", "（所により") + "）」です！"
-        message_text = "".join(message_text.split())
+    # 概要情報（気温など）も取得してみる
+    temp_res = requests.get(temp_url)
+    overview_text = ""
+    if temp_res.status_code == 200:
+        overview_data = temp_res.json()
+        # overview_data["text"] には全体の気象概況が含まれています
+        # 必要に応じてテキストの一部を抽出することも可能です
+
+    # 凝ったレイアウトのメッセージ作成
+    message_text = (
+        f"━━━━━━━━━━━━━━━\n"
+        f" 🌿 本日の天気予報 🌿\n"
+        f"━━━━━━━━━━━━━━━\n"
+        f"📅 日付：{now_time.month}月{now_time.day}日\n"
+        f"📍 地域：埼玉県 {area_name}\n\n"
+        f"【天気】\n"
+        f" {today_weather_icon}\n\n"
+        f"今日も一日頑張っていきましょう！🔥\n"
+        f"━━━━━━━━━━━━━━━"
+    )
+
     # LINEにメッセージを送信
-    line_bot_api.push_message(USER_ID, TextSendMessage(text=(f"【今日の天気】\n{message_text}")))
+    line_bot_api.push_message(USER_ID, TextSendMessage(text=message_text))
     print("LINEへの天気通知が成功しました")
 
 # エラー処理
