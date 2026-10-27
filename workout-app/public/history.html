@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>履歴 - 筋トレ記録</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#2f6fed">
+</head>
+<body>
+  <header>
+    <h1>履歴</h1>
+  </header>
+  <main>
+    <section class="panel">
+      <h2>期間</h2>
+      <div id="period" class="chips"></div>
+      <div class="row">
+        <input type="date" id="from">
+        <span>〜</span>
+        <input type="date" id="to">
+      </div>
+
+      <h2 class="sub">部位</h2>
+      <div id="parts" class="chips"></div>
+    </section>
+
+    <p id="summary" class="summary"></p>
+    <section id="history"></section>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/history.js"></script>
+</body>
+</html>

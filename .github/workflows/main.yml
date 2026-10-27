@@ -1,6 +1,8 @@
 name: 毎日天気を通知する
 
 on:
+  push:
+    branches: [ "main" ]
   schedule:
     # 毎日日本時間の朝6時（世界標準時の前日22時）に自動実行する設定
     - cron: '0 21 * * *'

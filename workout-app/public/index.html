@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>筋トレ記録</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#2f6fed">
+</head>
+<body>
+  <header>
+    <h1>筋トレ記録</h1>
+    <input type="date" id="date">
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>体重</h2>
+      <div class="row">
+        <input type="number" id="bw-input" step="0.1" min="20" max="300" inputmode="decimal" placeholder="体重(kg)">
+        <button id="bw-save" class="primary">記録</button>
+        <button id="bw-delete" class="ghost" hidden>削除</button>
+      </div>
+      <p id="bw-info" class="hint"></p>
+    </section>
+    <section class="panel">
+      <h2>トレーニングを始める</h2>
+      <div class="row">
+        <select id="tpl-select"></select>
+        <button id="tpl-start" class="primary">テンプレートで開始</button>
+      </div>
+
+      <h2 class="sub">種目を1つずつ追加</h2>
+      <div class="row">
+        <select id="add-select"></select>
+        <button id="add-btn">追加</button>
+      </div>
+      <details>
+        <summary>新しい種目を登録</summary>
+        <form id="exercise-form" class="column">
+          <input type="text" id="ex-name" placeholder="種目名(例: ベンチプレス)" required>
+          <div class="row">
+            <select id="ex-part"></select>
+            <select id="ex-type"></select>
+          </div>
+          <textarea id="ex-note" rows="2" placeholder="固定メモ(マシンのセッティングなど)"></textarea>
+          <button type="submit">登録</button>
+        </form>
+      </details>
+    </section>
+
+    <div id="workout-tools" class="tools" hidden>
+      <button id="fill-all-btn">全種目を前回と同じに</button>
+      <button id="clear-btn" class="danger">この日の記録を全削除</button>
+    </div>
+    <section id="workout"></section>
+
+    <section class="panel">
+      <h2>テンプレート</h2>
+      <div id="tpl-list"></div>
+      <div class="row" style="margin-top:10px">
+        <input type="text" id="tpl-name" placeholder="新しいテンプレート名(例: 胸A)">
+        <button id="tpl-create">作成</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>種目別ベスト</h2>
+      <div id="filter" class="chips"></div>
+      <table>
+        <thead><tr><th>種目</th><th>ベスト重量</th><th>推定1RM</th></tr></thead>
+        <tbody id="record-list"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- 変更前: <script src="app.js"></script> -->
+  <script src="js/common.js"></script>
+  <script src="js/workout.js"></script>
+    <div id="toast" class="toast" hidden></div>
+</body>
+</html>

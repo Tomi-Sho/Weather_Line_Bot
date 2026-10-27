@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>設定 - 筋トレ記録</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#2f6fed">
+</head>
+<body>
+  <header>
+    <h1>種目・バックアップ</h1>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>バックアップ</h2>
+      <div class="row">
+        <button id="export-btn" class="primary">書き出し</button>
+        <button id="import-btn">復元</button>
+        <input type="file" id="import-file" accept=".json,application/json" hidden>
+      </div>
+      <p class="hint">復元すると、いまのデータはすべてバックアップの内容に置き換わります(復元前に <code>backups/</code> フォルダへ自動でコピーを残します)。</p>
+    </section>
+
+    <section class="panel">
+      <h2>種目の管理</h2>
+      <div id="part-filter" class="chips"></div>
+      <div id="list"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="js/common.js"></script>
+  <script src="js/exercises.js"></script>
+</body>
+</html>
