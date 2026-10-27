@@ -61,7 +61,7 @@ try:
         f"📅 日付：{now_time.month}月{now_time.day}日\n"
         f"📍 地域：埼玉県 {area_name}\n\n"
         f"【天気】\n"
-        f" {today_weather_icon.split()}\n\n"
+        f" {today_weather_icon.strip()}\n\n"
         f"今日も一日頑張っていきましょう！🔥\n"
         f"━━━━━━━━━━━━━━━"
     )
