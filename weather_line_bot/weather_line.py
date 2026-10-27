@@ -53,6 +53,9 @@ try:
         # overview_data["text"] には全体の気象概況が含まれています
         # 必要に応じてテキストの一部を抽出することも可能です
 
+    # 空白削除
+    cleaned_weather = "".join(today_weather_icon.split())
+    
     # 凝ったレイアウトのメッセージ作成
     message_text = (
         f"━━━━━━━━━━━━━━━\n"
@@ -61,7 +64,7 @@ try:
         f"📅 日付：{now_time.month}月{now_time.day}日\n"
         f"📍 地域：埼玉県 {area_name}\n\n"
         f"【天気】\n"
-        f" {"".join(today_weather_icon.split())}\n\n"
+        f" {cleaned_weather}\n\n"
         f"今日も一日頑張っていきましょう！🔥\n"
         f"━━━━━━━━━━━━━━━"
     )
